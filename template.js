@@ -4,14 +4,14 @@
 // 读取 名称为 "机场" 的 组合订阅 中的节点(单订阅不需要设置 type 参数)
 // 把 所有节点插入匹配 /all|all-auto/i 的 outbound 中(跟在 🕳 后面, ℹ️ 表示忽略大小写, 不筛选节点不需要给 🏷 )
 // 把匹配 /港|hk|hongkong|kong kong|🇭🇰/i  (跟在 🏷 后面, ℹ️ 表示忽略大小写) 的节点插入匹配 /hk|hk-auto/i 的 outbound 中
+// 支持每个 🕳 规则换行书写
 // ...
-// 可选参数: includeUnsupportedProxy 包含官方/商店版不支持的协议 SSR. 用法: `&includeUnsupportedProxy=true`
+// 可选参数: includeUnsupportedProxy 含不支持的协议 SSR 和 Snell. 用法: `&includeUnsupportedProxy=true`
 
 // 支持传入订阅 URL. 参数为 url. 记得 url 需要 encodeURIComponent.
 // 例如: http://a.com?token=123 应使用 url=http%3A%2F%2Fa.com%3Ftoken%3D123
 
 // ⚠️ 如果 outbounds 为空, 自动创建 COMPATIBLE(direct) 并插入 防止报错
-
 log(`🚀 开始`)
 
 let { type, name, outbound, includeUnsupportedProxy, url } = $arguments
@@ -29,14 +29,12 @@ try {
   log(`${e.message ?? e}`)
   throw new Error(`配置文件不是合法的 ${ProxyUtils.JSON5 ? 'JSON5' : 'JSON'} 格式`)
 }
-
 log(`② 获取订阅`)
 
 let proxies = []
 let outbounds = []
 let endpoints = []
 let data = {}
-
 if (url) {
   log(`直接从 URL ${url} 读取订阅`)
   data = await produceArtifact({
@@ -64,7 +62,6 @@ if (url) {
   })
   console.log(data)
 }
-
 data = JSON.parse(data)
 outbounds = data.outbounds ?? []
 endpoints = data.endpoints ?? []
@@ -74,6 +71,7 @@ log(`获取到 ${outbounds.length} 个节点, ${endpoints.length} 个端点`)
 log(`③ outbound 规则解析`)
 const outboundRules = outbound
   .split('🕳')
+  .map(i => i.trim())
   .filter(i => i)
   .map(i => {
     let [outboundPattern, tagPattern = '.*'] = i.split('🏷')
@@ -86,9 +84,8 @@ log(`④ outbound 插入节点`)
 if (!Array.isArray(config.outbounds)) {
   config.outbounds = []
 }
-
-config.outbounds.forEach(outbound => {
-  outboundRules.forEach(([outboundPattern, tagRegex]) => {
+config.outbounds.map(outbound => {
+  outboundRules.map(([outboundPattern, tagRegex]) => {
     const outboundRegex = createOutboundRegExp(outboundPattern)
     if (outboundRegex.test(outbound.tag)) {
       if (!Array.isArray(outbound.outbounds)) {
@@ -107,13 +104,9 @@ const compatible_outbound = {
 }
 
 let compatible
-log(`⑤ 空 outbounds 检查（selector 和 urltest 均保护）`)
-
-config.outbounds.forEach(outbound => {
-  // 只对 selector 和 urltest 类型做兜底保护
-  if (!['selector', 'urltest'].includes(outbound.type)) return
-
-  outboundRules.forEach(([outboundPattern, tagRegex]) => {
+log(`⑤ 空 outbounds 检查`)
+config.outbounds.map(outbound => {
+  outboundRules.map(([outboundPattern, tagRegex]) => {
     const outboundRegex = createOutboundRegExp(outboundPattern)
     if (outboundRegex.test(outbound.tag)) {
       if (!Array.isArray(outbound.outbounds)) {
@@ -124,17 +117,14 @@ config.outbounds.forEach(outbound => {
           config.outbounds.push(compatible_outbound)
           compatible = true
         }
-        log(`🕳 ${outbound.tag} (${outbound.type}) 的 outbounds 为空, 自动插入 COMPATIBLE(direct)`)
+        log(`🕳 ${outbound.tag} 的 outbounds 为空, 自动插入 COMPATIBLE(direct)`)
         outbound.outbounds.push(compatible_outbound.tag)
       }
     }
   })
 })
 
-// 将订阅节点追加到配置的 outbounds 末尾
 config.outbounds.push(...outbounds)
-
-// 处理 endpoints（WireGuard 端点等）
 if (!Array.isArray(config.endpoints)) {
   config.endpoints = []
 }
@@ -142,28 +132,17 @@ config.endpoints.push(...endpoints)
 
 $content = JSON.stringify(config, null, 2)
 
-// ── 工具函数 ──────────────────────────────────────────────
-
 function getTags(proxies, regex) {
   return (regex ? proxies.filter(p => regex.test(p.tag)) : proxies).map(p => p.tag)
 }
-
 function log(v) {
   console.log(`[📦 sing-box 模板脚本] ${v}`)
 }
-
 function createTagRegExp(tagPattern) {
-  return new RegExp(
-    tagPattern.replace('ℹ️', ''),
-    tagPattern.includes('ℹ️') ? 'i' : undefined
-  )
+  return new RegExp(tagPattern.replace('ℹ️', ''), tagPattern.includes('ℹ️') ? 'i' : undefined)
 }
-
 function createOutboundRegExp(outboundPattern) {
-  return new RegExp(
-    outboundPattern.replace('ℹ️', ''),
-    outboundPattern.includes('ℹ️') ? 'i' : undefined
-  )
+  return new RegExp(outboundPattern.replace('ℹ️', ''), outboundPattern.includes('ℹ️') ? 'i' : undefined)
 }
 
 log(`🔚 结束`)
