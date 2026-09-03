@@ -49,8 +49,7 @@
         "rewrite_ttl": 1
       }
     ],
-    "final": "google",
-    "independent_cache": true
+    "final": "google"
   },
   "route": {
     "default_domain_resolver": {
