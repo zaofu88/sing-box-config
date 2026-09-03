@@ -17,13 +17,13 @@
             {"tag": "local","type": "local","neighbor_domain": [".local",".lan"]}
         ],
         "rules": [
+            {"clash_mode": "全局直连","action": "route","server": "ali-doh"},
+            {"clash_mode": "全局代理","action": "route","server": "fakeip"},
             {"rule_set": ["Ads"],"action": "reject"},
             {"rule_set": ["ChinaDomain"],"action": "route","server": "ali-doh"},
             {"query_type": "HTTPS","action": "reject"},
-            {"domain_suffix": ["lancache.steamcontent.com","10099.com.cn","msftconnecttest.com","msftncsi.com","local","lan","home","internal","corp","example.com"],"server": "local"},
-            {"query_type": ["A","AAAA"],"action": "route","server": "fakeip","rewrite_ttl": 1},
-            {"clash_mode": "全局直连","action": "route","server": "ali-doh"},
-            {"clash_mode": "全局代理","action": "route","server": "fakeip"}
+            {"domain_suffix": ["lancache.steamcontent.com","10099.com.cn","msftconnecttest.com","msftncsi.com","local","lan","home","internal","corp"],"server": "local"},
+            {"query_type": ["A","AAAA"],"action": "route","server": "fakeip","rewrite_ttl": 1}
         ],
         "reverse_mapping": true,
         "strategy": "ipv4_only",
@@ -43,11 +43,11 @@
         {"tag": "Spotify","type": "selector","outbounds": ["Proxy","🇭🇰 HongKong","🇺🇸 United States","🇸🇬 Singapore","🇯🇵 Japan","🇨🇳 Taiwan","Direct"],"default": "Proxy","interrupt_exist_connections": true},
         {"tag": "ProxyMedia","type": "selector","outbounds": ["Proxy","🇭🇰 HongKong","🇺🇸 United States","🇸🇬 Singapore","🇯🇵 Japan","🇨🇳 Taiwan"],"default": "Proxy","interrupt_exist_connections": true},
         {"tag": "Final","type": "selector","outbounds": ["Proxy","🇭🇰 HongKong","🇺🇸 United States","🇸🇬 Singapore","🇯🇵 Japan","🇨🇳 Taiwan","Direct"],"default": "Proxy","interrupt_exist_connections": true},
-        {"tag": "🇭🇰 HongKong","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interrupt_exist_connections": true},
-        {"tag": "🇺🇸 United States","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interrupt_exist_connections": true},
-        {"tag": "🇸🇬 Singapore","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interrupt_exist_connections": true},
-        {"tag": "🇯🇵 Japan","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interrupt_exist_connections": true},
-        {"tag": "🇨🇳 Taiwan","type": "urltest","outbounds": [],"url": "http://1.1.1.1/generate_204","interrupt_exist_connections": true}
+        {"tag": "🇭🇰 HongKong","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "1m","tolerance": 50,"interrupt_exist_connections": true},
+        {"tag": "🇺🇸 United States","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "1m","tolerance": 50,"interrupt_exist_connections": true},
+        {"tag": "🇸🇬 Singapore","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "1m","tolerance": 50,"interrupt_exist_connections": true},
+        {"tag": "🇯🇵 Japan","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "1m","tolerance": 50,"interrupt_exist_connections": true},
+        {"tag": "🇨🇳 Taiwan","type": "urltest","outbounds": [],"url": "https://www.gstatic.com/generate_204","interval": "1m","tolerance": 50,"interrupt_exist_connections": true}
     ],
     "route": {
         "rule_set": [
@@ -74,7 +74,7 @@
             {"tag": "AppleCN", "type": "remote", "format": "binary", "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleCN.srs", "http_client": "default"},
             {"tag": "AppleProxy", "type": "remote", "format": "binary", "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleServers.srs", "http_client": "default"},
             {"tag": "ChinaDomain", "type": "remote", "format": "binary", "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/ChinaDomain.srs", "http_client": "default"},
-            {"tag": "ChinaIP", "type": "remote", "format": "binary", "url": "https://git.repcz.link/github.com/Loyalsoldier/geoip/raw/release/srs/cn.srs", "http_client": "default"}
+            {"tag": "ChinaIP", "type": "remote", "format": "binary", "url": "https://github.com/Loyalsoldier/geoip/raw/release/srs/cn.srs", "http_client": "default"}
         ],
         "rules": [
             {"action": "sniff","sniffer": ["http","tls","quic","dns"]},
