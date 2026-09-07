@@ -102,7 +102,8 @@
           "x",
           "facebook",
           "instagram",
-          "emby"
+          "emby",
+          "xunlei"
         ],
         "query_type": [
           "A",
@@ -301,6 +302,16 @@
       "default": "Default"
     },
 
+        {
+      "type": "selector",
+      "tag": "Xunlei",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
     {
       "type": "selector",
       "tag": "AI",
@@ -324,6 +335,15 @@
 
   "route": {
     "rule_set": [
+      {
+        "tag": "xunlei",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/xunlei.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
       {
         "tag": "private-ip",
         "type": "remote",
@@ -515,6 +535,14 @@
         "outbound": "Direct-Out"
       },
 
+      {
+        "rule_set": [
+        "xunlei"
+        ],
+        "action": "route",
+        "outbound": "Xunlei"
+      },
+        
       {
         "rule_set": [
           "private-ip",
