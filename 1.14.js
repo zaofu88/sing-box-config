@@ -24,29 +24,35 @@ if (rules_file) {
       }
 
       // 查找 Clash Global 规则
-      const idx = config.route.rules.findIndex(
-        r =>
+      // 兼容 Global / global
+      const globalIndex = config.route.rules.findIndex(
+        (r) =>
           typeof r.clash_mode === "string" &&
           r.clash_mode.toLowerCase() === "global"
       );
 
-      // 已有规则去重
+      // 对自定义规则去重
       const existingRules = new Set(
-        config.route.rules.map(r => JSON.stringify(r))
+        config.route.rules.map((r) => JSON.stringify(r))
       );
 
       customRules = customRules.filter(
-        r => !existingRules.has(JSON.stringify(r))
+        (r) => !existingRules.has(JSON.stringify(r))
       );
 
-      // 插入到 Global 规则之后
-      if (idx !== -1) {
-        config.route.rules.splice(idx + 1, 0, ...customRules);
+      // 插入到 Clash Global 规则之后
+      if (globalIndex !== -1) {
+        config.route.rules.splice(
+          globalIndex + 1,
+          0,
+          ...customRules
+        );
       } else {
         config.route.rules.push(...customRules);
       }
     }
   } catch (e) {
+    // 自定义规则读取失败，不影响主配置生成
     console.log(
       `Failed to load custom rules: ${rules_file}`,
       e
@@ -69,40 +75,40 @@ if (!Array.isArray(proxies)) {
   proxies = [];
 }
 
-// 4. 去重已有节点 tag
+// 4. 过滤无效节点，并避免与模板已有节点 tag 冲突
 const existingTags = new Set(
   config.outbounds
-    .map(o => o.tag)
+    .map((o) => o.tag)
     .filter(Boolean)
 );
 
 proxies = proxies.filter(
-  p =>
+  (p) =>
     p &&
     p.tag &&
     !existingTags.has(p.tag)
 );
 
-// 5. 添加新节点
+// 5. 添加订阅节点
 config.outbounds.push(...proxies);
 
-// 6. 节点列表
+// 6. 获取节点 tag
 const allTags = proxies
-  .map(p => p.tag)
+  .map((p) => p.tag)
   .filter(Boolean);
 
 // Relay 只加入没有 detour 的终端节点
 const terminalTags = proxies
-  .filter(p => !p.detour && p.tag)
-  .map(p => p.tag);
+  .filter((p) => !p.detour && p.tag)
+  .map((p) => p.tag);
 
-// 7. 将节点加入分组
-config.outbounds.forEach(group => {
+// 7. 自动把订阅节点加入各个节点组
+config.outbounds.forEach((group) => {
   if (!Array.isArray(group.outbounds)) {
     return;
   }
 
-  // Direct-Out 不加入节点
+  // Direct-Out 永远不加入订阅节点
   if (group.tag === "Direct-Out") {
     return;
   }
@@ -110,13 +116,15 @@ config.outbounds.forEach(group => {
   // Relay 只加入终端节点
   if (group.tag === "Relay") {
     group.outbounds.push(...terminalTags);
-  } else {
-    group.outbounds.push(...allTags);
+    return;
   }
+
+  // 其他 selector / urltest 自动加入全部节点
+  group.outbounds.push(...allTags);
 });
 
-// 8. 分组去重
-config.outbounds.forEach(group => {
+// 8. 对各节点组去重
+config.outbounds.forEach((group) => {
   if (Array.isArray(group.outbounds)) {
     group.outbounds = [...new Set(group.outbounds)];
   }
