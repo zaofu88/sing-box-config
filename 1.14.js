@@ -1,4 +1,3 @@
-```javascript
 const { name, type = "0", rules: rules_file } = $arguments;
 
 // 1. 读取模板
@@ -126,4 +125,3 @@ config.outbounds.forEach(group => {
 
 // 9. 输出最终配置
 $content = JSON.stringify(config, null, 2);
-```
