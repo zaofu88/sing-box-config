@@ -1,0 +1,638 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+
+  "dns": {
+    "servers": [
+      {
+        "tag": "hosts",
+        "type": "hosts",
+        "predefined": {
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "2001:4860:4860::8888",
+            "2001:4860:4860::8844"
+          ]
+        }
+      },
+
+      {
+        "tag": "dns_local",
+        "type": "local"
+      },
+
+      {
+        "tag": "dns_direct",
+        "type": "udp",
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
+
+      {
+        "tag": "dns_proxy",
+        "type": "https",
+        "server": "dns.google",
+        "domain_resolver": "hosts",
+        "detour": "GLOBAL"
+      },
+
+      {
+        "tag": "dns_fakeip",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      }
+    ],
+
+    "rules": [
+      {
+        "preferred_by": [
+          "hosts"
+        ],
+        "action": "route",
+        "server": "hosts"
+      },
+
+      {
+        "clash_mode": "Direct",
+        "action": "route",
+        "server": "dns_direct"
+      },
+
+      {
+        "clash_mode": "Global",
+        "action": "route",
+        "server": "dns_proxy"
+      },
+
+      {
+        "rule_set": [
+          "private-site"
+        ],
+        "action": "route",
+        "server": "dns_local"
+      },
+
+      {
+        "rule_set": [
+          "apple-cn",
+          "microsoft-cn"
+        ],
+        "action": "route",
+        "server": "dns_direct"
+      },
+
+      {
+        "rule_set": [
+          "ai",
+          "youtube",
+          "google-site",
+          "telegram-site",
+          "github",
+          "onedrive",
+          "x",
+          "facebook",
+          "instagram",
+          "emby"
+        ],
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "action": "route",
+        "server": "dns_fakeip"
+      },
+
+      {
+        "rule_set": [
+          "cn"
+        ],
+        "action": "route",
+        "server": "dns_direct"
+      },
+
+      {
+        "action": "evaluate",
+        "server": "dns_proxy",
+        "client_subnet": "211.136.192.0/24"
+      },
+
+      {
+        "match_response": true,
+        "rule_set": [
+          "private-ip"
+        ],
+        "action": "route",
+        "server": "dns_local"
+      },
+
+      {
+        "match_response": true,
+        "rule_set": [
+          "cnip"
+        ],
+        "action": "route",
+        "server": "dns_direct"
+      }
+    ],
+
+    "final": "dns_proxy",
+    "strategy": "prefer_ipv4",
+    "optimistic": true,
+    "reverse_mapping": true
+  },
+
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "singbox_tun",
+
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+
+      "mtu": 9000,
+
+      "auto_route": true,
+
+      "route_exclude_address": [
+        "10.0.0.0/8",
+        "100.64.0.0/10",
+        "169.254.0.0/16",
+        "172.16.0.0/12",
+        "192.0.0.0/24",
+        "192.168.0.0/16"
+      ],
+
+      "strict_route": true,
+      "stack": "mixed"
+    },
+
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 7890
+    }
+  ],
+
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "Default",
+      "outbounds": [
+        "Auto",
+        "Direct-Out"
+      ],
+      "default": "Auto"
+    },
+
+    {
+      "type": "urltest",
+      "tag": "Auto",
+      "outbounds": [],
+      "interval": "3m",
+      "tolerance": 30
+    },
+
+    {
+      "type": "direct",
+      "tag": "Direct-Out"
+    },
+
+    {
+      "type": "selector",
+      "tag": "Telegram",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "YouTube",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+    
+    {
+      "type": "selector",
+      "tag": "Google",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "Twitter",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "Facebook",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "Instagram",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "GitHub",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "OneDrive",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "Emby",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "AI",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+
+    {
+      "type": "selector",
+      "tag": "GLOBAL",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    }
+  ],
+
+  "route": {
+    "rule_set": [
+      {
+        "tag": "private-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "private-site",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "google-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "google-site",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "telegram-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "telegram-site",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "ai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-!cn.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "onedrive",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "github",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "x",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/x.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "facebook",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "instagram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "emby",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-emby.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "apple-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple@cn.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "microsoft-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft@cn.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "cnip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+
+      {
+        "tag": "cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      }
+    ],
+
+    "rules": [
+      {
+        "action": "sniff"
+      },
+
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+
+      {
+        "clash_mode": "Direct",
+        "action": "route",
+        "outbound": "Direct-Out"
+      },
+
+      {
+        "clash_mode": "Global",
+        "action": "route",
+        "outbound": "GLOBAL"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "Direct-Out"
+      },
+
+      {
+        "rule_set": [
+          "private-ip",
+          "private-site",
+          "apple-cn",
+          "microsoft-cn",
+          "cn",
+          "cnip"
+        ],
+        "action": "route",
+        "outbound": "Direct-Out"
+      },
+
+      {
+        "rule_set": [
+          "telegram-ip",
+          "telegram-site"
+        ],
+        "action": "route",
+        "outbound": "Telegram"
+      },
+
+      {
+        "rule_set": [
+          "youtube"
+        ],
+        "action": "route",
+        "outbound": "YouTube"
+      },
+
+      {
+        "rule_set": [
+          "google-ip",
+          "google-site"
+        ],
+        "action": "route",
+        "outbound": "Google"
+      },
+
+      {
+        "rule_set": [
+          "x"
+        ],
+        "action": "route",
+        "outbound": "Twitter"
+      },
+
+      {
+        "rule_set": [
+          "facebook"
+        ],
+        "action": "route",
+        "outbound": "Facebook"
+      },
+
+      {
+        "rule_set": [
+          "instagram"
+        ],
+        "action": "route",
+        "outbound": "Instagram"
+      },
+
+      {
+        "rule_set": [
+          "github"
+        ],
+        "action": "route",
+        "outbound": "GitHub"
+      },
+
+      {
+        "rule_set": [
+          "onedrive"
+        ],
+        "action": "route",
+        "outbound": "OneDrive"
+      },
+
+      {
+        "rule_set": [
+          "emby"
+        ],
+        "action": "route",
+        "outbound": "Emby"
+      },
+
+      {
+        "rule_set": [
+          "ai"
+        ],
+        "action": "route",
+        "outbound": "AI"
+      }
+    ],
+
+    "auto_detect_interface": true,
+    "default_domain_resolver": "dns_direct",
+    "default_http_client": "rs-http",
+    "final": "GLOBAL"
+  },
+
+  "http_clients": [
+    {
+      "tag": "rs-http"
+    }
+  ],
+
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true,
+      "store_dns": true
+    },
+
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "default_mode": "rule"
+    }
+  }
+}
