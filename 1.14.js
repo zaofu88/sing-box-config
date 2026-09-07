@@ -19,25 +19,22 @@ if (rules_file) {
     if (customRulesRaw) {
       let customRules = JSON.parse(customRulesRaw);
 
-      // 确保自定义规则一定是数组
       if (!Array.isArray(customRules)) {
         customRules = [];
       }
 
       // 查找 Clash Global 规则
-      // 不区分大小写，兼容 Global / global
       const idx = config.route.rules.findIndex(
         r =>
           typeof r.clash_mode === "string" &&
           r.clash_mode.toLowerCase() === "global"
       );
 
-      // 当前模板中已经存在的规则
+      // 已有规则去重
       const existingRules = new Set(
         config.route.rules.map(r => JSON.stringify(r))
       );
 
-      // 自定义规则去重
       customRules = customRules.filter(
         r => !existingRules.has(JSON.stringify(r))
       );
@@ -46,20 +43,23 @@ if (rules_file) {
       if (idx !== -1) {
         config.route.rules.splice(idx + 1, 0, ...customRules);
       } else {
-        // 没找到 Global，则追加到末尾
         config.route.rules.push(...customRules);
       }
     }
   } catch (e) {
-    // 自定义规则读取失败时，不影响主订阅生成
-    console.log(`Failed to load custom rules: ${rules_file}`, e);
+    console.log(
+      `Failed to load custom rules: ${rules_file}`,
+      e
+    );
   }
 }
 
 // 3. 拉取订阅或合集节点
 let proxies = await produceArtifact({
   name,
-  type: /^1$|col/i.test(type) ? "collection" : "subscription",
+  type: /^1$|col/i.test(type)
+    ? "collection"
+    : "subscription",
   platform: "sing-box",
   produceType: "internal",
 });
@@ -83,10 +83,10 @@ proxies = proxies.filter(
     !existingTags.has(p.tag)
 );
 
-// 5. 添加新节点到 outbounds
+// 5. 添加新节点
 config.outbounds.push(...proxies);
 
-// 6. 准备节点 tag 列表
+// 6. 节点列表
 const allTags = proxies
   .map(p => p.tag)
   .filter(Boolean);
@@ -96,7 +96,7 @@ const terminalTags = proxies
   .filter(p => !p.detour && p.tag)
   .map(p => p.tag);
 
-// 7. 遍历所有分组追加节点
+// 7. 将节点加入分组
 config.outbounds.forEach(group => {
   if (!Array.isArray(group.outbounds)) {
     return;
@@ -111,12 +111,11 @@ config.outbounds.forEach(group => {
   if (group.tag === "Relay") {
     group.outbounds.push(...terminalTags);
   } else {
-    // Selector / URLTest 等加入全部节点
     group.outbounds.push(...allTags);
   }
 });
 
-// 8. 分组内去重
+// 8. 分组去重
 config.outbounds.forEach(group => {
   if (Array.isArray(group.outbounds)) {
     group.outbounds = [...new Set(group.outbounds)];
