@@ -666,8 +666,7 @@
   },
   "http_clients": [
     {
-      "tag": "direct",
-      "detour": "direct"
+      "tag": "direct"
     }
   ]
 }
