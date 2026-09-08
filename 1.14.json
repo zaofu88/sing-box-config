@@ -3,7 +3,6 @@
     "level": "info",
     "timestamp": true
   },
-
   "dns": {
     "servers": [
       {
@@ -24,19 +23,16 @@
           ]
         }
       },
-
       {
         "tag": "dns_local",
         "type": "local"
       },
-
       {
         "tag": "dns_direct",
         "type": "udp",
         "server": "223.5.5.5",
         "server_port": 53
       },
-
       {
         "tag": "dns_proxy",
         "type": "https",
@@ -44,7 +40,6 @@
         "domain_resolver": "hosts",
         "detour": "GLOBAL"
       },
-
       {
         "tag": "dns_fakeip",
         "type": "fakeip",
@@ -52,7 +47,6 @@
         "inet6_range": "fc00::/18"
       }
     ],
-
     "rules": [
       {
         "preferred_by": [
@@ -61,19 +55,16 @@
         "action": "route",
         "server": "hosts"
       },
-
       {
         "clash_mode": "Direct",
         "action": "route",
         "server": "dns_direct"
       },
-
       {
         "clash_mode": "Global",
         "action": "route",
         "server": "dns_proxy"
       },
-
       {
         "rule_set": [
           "private-site"
@@ -81,7 +72,6 @@
         "action": "route",
         "server": "dns_local"
       },
-
       {
         "rule_set": [
           "apple-cn",
@@ -90,7 +80,6 @@
         "action": "route",
         "server": "dns_direct"
       },
-
       {
         "rule_set": [
           "ai",
@@ -112,7 +101,6 @@
         "action": "route",
         "server": "dns_fakeip"
       },
-
       {
         "rule_set": [
           "cn"
@@ -120,13 +108,11 @@
         "action": "route",
         "server": "dns_direct"
       },
-
       {
         "action": "evaluate",
-        "server": "dns_direct",
+        "server": "dns_proxy",
         "client_subnet": "211.136.192.0/24"
       },
-
       {
         "match_response": true,
         "rule_set": [
@@ -135,7 +121,6 @@
         "action": "route",
         "server": "dns_local"
       },
-
       {
         "match_response": true,
         "rule_set": [
@@ -145,28 +130,22 @@
         "server": "dns_direct"
       }
     ],
-
     "final": "dns_direct",
     "strategy": "prefer_ipv4",
     "optimistic": true,
     "reverse_mapping": true
   },
-
   "inbounds": [
     {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "singbox_tun",
-
       "address": [
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-
       "mtu": 9000,
-
       "auto_route": true,
-
       "route_exclude_address": [
         "10.0.0.0/8",
         "100.64.0.0/10",
@@ -175,11 +154,9 @@
         "192.0.0.0/24",
         "192.168.0.0/16"
       ],
-
       "strict_route": true,
       "stack": "mixed"
     },
-
     {
       "type": "mixed",
       "tag": "mixed-in",
@@ -187,7 +164,6 @@
       "listen_port": 7890
     }
   ],
-
   "outbounds": [
     {
       "type": "selector",
@@ -198,7 +174,6 @@
       ],
       "default": "Auto"
     },
-
     {
       "type": "urltest",
       "tag": "Auto",
@@ -206,12 +181,10 @@
       "interval": "3m",
       "tolerance": 30
     },
-
     {
       "type": "direct",
       "tag": "Direct-Out"
     },
-
     {
       "type": "selector",
       "tag": "Telegram",
@@ -221,7 +194,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "YouTube",
@@ -231,7 +203,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "Google",
@@ -241,7 +212,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "Twitter",
@@ -251,7 +221,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "Facebook",
@@ -261,7 +230,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "Instagram",
@@ -271,7 +239,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "GitHub",
@@ -281,7 +248,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "OneDrive",
@@ -291,7 +257,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "Emby",
@@ -301,8 +266,7 @@
       ],
       "default": "Default"
     },
-
-        {
+    {
       "type": "selector",
       "tag": "Xunlei",
       "outbounds": [
@@ -311,7 +275,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "AI",
@@ -321,7 +284,6 @@
       ],
       "default": "Default"
     },
-
     {
       "type": "selector",
       "tag": "GLOBAL",
@@ -332,7 +294,6 @@
       "default": "Default"
     }
   ],
-
   "route": {
     "rule_set": [
       {
@@ -343,7 +304,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "private-ip",
         "type": "remote",
@@ -352,7 +312,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "private-site",
         "type": "remote",
@@ -361,7 +320,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "youtube",
         "type": "remote",
@@ -370,7 +328,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "google-ip",
         "type": "remote",
@@ -379,7 +336,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "google-site",
         "type": "remote",
@@ -388,7 +344,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "telegram-ip",
         "type": "remote",
@@ -397,7 +352,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "telegram-site",
         "type": "remote",
@@ -406,7 +360,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "ai",
         "type": "remote",
@@ -415,7 +368,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "onedrive",
         "type": "remote",
@@ -424,7 +376,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "github",
         "type": "remote",
@@ -433,7 +384,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "x",
         "type": "remote",
@@ -442,7 +392,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "facebook",
         "type": "remote",
@@ -451,7 +400,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "instagram",
         "type": "remote",
@@ -460,7 +408,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "emby",
         "type": "remote",
@@ -469,7 +416,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "apple-cn",
         "type": "remote",
@@ -478,7 +424,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "microsoft-cn",
         "type": "remote",
@@ -487,7 +432,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "cnip",
         "type": "remote",
@@ -496,7 +440,6 @@
         "http_client": "rs-http",
         "update_interval": "1d"
       },
-
       {
         "tag": "cn",
         "type": "remote",
@@ -506,43 +449,36 @@
         "update_interval": "1d"
       }
     ],
-
     "rules": [
       {
         "action": "sniff"
       },
-
       {
         "protocol": "dns",
         "action": "hijack-dns"
       },
-
       {
         "clash_mode": "Direct",
         "action": "route",
         "outbound": "Direct-Out"
       },
-
       {
         "clash_mode": "Global",
         "action": "route",
         "outbound": "GLOBAL"
       },
-
       {
         "ip_is_private": true,
         "action": "route",
         "outbound": "Direct-Out"
       },
-
       {
         "rule_set": [
-        "xunlei"
+          "xunlei"
         ],
         "action": "route",
         "outbound": "Xunlei"
       },
-        
       {
         "rule_set": [
           "private-ip",
@@ -555,7 +491,6 @@
         "action": "route",
         "outbound": "Direct-Out"
       },
-
       {
         "rule_set": [
           "telegram-ip",
@@ -564,7 +499,6 @@
         "action": "route",
         "outbound": "Telegram"
       },
-
       {
         "rule_set": [
           "youtube"
@@ -572,7 +506,6 @@
         "action": "route",
         "outbound": "YouTube"
       },
-
       {
         "rule_set": [
           "google-ip",
@@ -581,7 +514,6 @@
         "action": "route",
         "outbound": "Google"
       },
-
       {
         "rule_set": [
           "x"
@@ -589,7 +521,6 @@
         "action": "route",
         "outbound": "Twitter"
       },
-
       {
         "rule_set": [
           "facebook"
@@ -597,7 +528,6 @@
         "action": "route",
         "outbound": "Facebook"
       },
-
       {
         "rule_set": [
           "instagram"
@@ -605,7 +535,6 @@
         "action": "route",
         "outbound": "Instagram"
       },
-
       {
         "rule_set": [
           "github"
@@ -613,7 +542,6 @@
         "action": "route",
         "outbound": "GitHub"
       },
-
       {
         "rule_set": [
           "onedrive"
@@ -621,7 +549,6 @@
         "action": "route",
         "outbound": "OneDrive"
       },
-
       {
         "rule_set": [
           "emby"
@@ -629,7 +556,6 @@
         "action": "route",
         "outbound": "Emby"
       },
-
       {
         "rule_set": [
           "ai"
@@ -638,29 +564,22 @@
         "outbound": "AI"
       }
     ],
-
     "auto_detect_interface": true,
-
     "default_domain_resolver": "dns_direct",
-
     "default_http_client": "rs-http",
-
     "final": "GLOBAL"
   },
-
   "http_clients": [
     {
       "tag": "rs-http"
     }
   ],
-
   "experimental": {
     "cache_file": {
       "enabled": true,
       "store_fakeip": true,
       "store_dns": true
     },
-
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
       "default_mode": "rule"
