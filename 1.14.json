@@ -128,7 +128,8 @@
         ],
         "action": "route",
         "server": "dns_direct"
-      }
+      },
+      { "action": "respond" }
     ],
     "final": "dns_direct",
     "strategy": "prefer_ipv4",
@@ -144,7 +145,7 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 9000,
+      "mtu": 1500,
       "auto_route": true,
       "route_exclude_address": [
         "10.0.0.0/8",
