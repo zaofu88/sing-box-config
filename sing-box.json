@@ -626,25 +626,37 @@
   ],
   "inbounds": [
     {
+      "type": "mixed",
+      "tag": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7080
+    },
+    {
       "type": "tun",
+      "tag": "tun",
       "address": [
-        "172.19.0.0/30",
-        "fdfe:dcba:9876::0/126"
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
       ],
-      "stack": "mixed",
-      "auto_route": true,
+      "mtu": 1500,
       "platform": {
         "http_proxy": {
           "enabled": true,
           "server": "127.0.0.1",
-          "server_port": 7890
+          "server_port": 7080
         }
-      }
-    },
-    {
-      "type": "mixed",
-      "listen": "127.0.0.1",
-      "listen_port": 7890
+      },
+      "stack": "mixed",
+      "auto_route": true,
+      "strict_route": true,
+      "route_exclude_address": [
+        "10.0.0.0/8",
+        "100.64.0.0/10",
+        "169.254.0.0/16",
+        "172.16.0.0/12",
+        "192.0.0.0/24",
+        "192.168.0.0/16"
+      ]
     }
   ],
   "experimental": {
