@@ -115,7 +115,7 @@
             }
         ],
         "reverse_mapping": true,
-        "strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
         "optimistic": true,
         "final": "ali-doh"
     },
@@ -131,8 +131,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -147,8 +145,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany"
             ],
             "default": "United States",
@@ -162,8 +158,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany"
             ],
             "default": "United States",
@@ -177,8 +171,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -193,8 +185,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany"
             ],
             "default": "Manual",
@@ -208,8 +198,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany"
             ],
             "default": "Singapore",
@@ -223,8 +211,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -239,8 +225,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -255,8 +239,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -271,8 +253,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany"
             ],
             "default": "Manual",
@@ -286,8 +266,6 @@
                 "HongKong",
                 "United States",
                 "Singapore",
-                "Japan",
-                "Taiwan",
                 "Germany",
                 "Direct"
             ],
@@ -313,7 +291,7 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "Japan",
+            "tag": "Germany",
             "type": "urltest",
             "outbounds": [],
             "interrupt_exist_connections": true
@@ -325,7 +303,7 @@
             "interrupt_exist_connections": true
         },
         {
-            "tag": "Germany",
+            "tag": "Japan",
             "type": "urltest",
             "outbounds": [],
             "interrupt_exist_connections": true
@@ -340,6 +318,7 @@
                     "Telegram",
                     "Twitter",
                     "Facebook",
+                    "Instagram",
                     "TikTok",
                     "Steam",
                     "Epic",
@@ -420,6 +399,7 @@
                 "rule_set": [
                     "Twitter",
                     "Facebook",
+                    "Instagram",
                     "TikTok"
                 ],
                 "action": "route",
