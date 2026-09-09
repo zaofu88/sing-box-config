@@ -1,10 +1,13 @@
-// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️^HongKong$🏷^HK🕳ℹ️^Taiwan$🏷^TW🕳ℹ️^Japan$🏷^JP🕳ℹ️^Singapore$🏷^SG🕳ℹ️^United States$🏷^US🕳ℹ️^Germany$🏷^DE
+// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️^HongKong$🏷^[^A-Za-z]*HK🕳ℹ️^Taiwan$🏷^[^A-Za-z]*TW🕳ℹ️^Japan$🏷^[^A-Za-z]*JP🕳ℹ️^Singapore$🏷^[^A-Za-z]*SG🕳ℹ️^United States$🏷^[^A-Za-z]*US🕳ℹ️^Germany$🏷^[^A-Za-z]*DE
 
-// ⚠️ 上面 🏷 后面的匹配规则(^HK / ^US / ^SG / ^DE 等)是按"节点名以大写字母前缀开头"来写的,
-// 故意没有加 ℹ️ 标记,因为 ℹ️ 是双码位 emoji,经过 URL 编码/复制粘贴容易丢失或损坏,
-// 一旦丢失,原本想做的"不区分大小写"匹配就会退化成区分大小写,导致大写节点名完全匹配不上
-// (createTagRegExp 的实现是: 带 ℹ️ 才加正则的 i 标志)。
-// 如果你的节点命名规则不是"大写字母前缀",请把 ^HK / ^US 等换成你自己的实际前缀或关键词。
+// ⚠️ 上面 🏷 后面的匹配规则(^[^A-Za-z]*HK 等)是按"节点名以大写字母前缀标识地区,
+// 前面可能夹带国旗 emoji / 空格 / 符号"来写的:
+//   ^[^A-Za-z]*HK 表示"字符串开头允许任意非字母字符(国旗 emoji、空格、竖线、方括号等都算),
+//   然后紧跟字母 HK"。国旗 emoji(如 🇭🇰)本质是两个区域指示符号字符拼成的,
+//   Unicode 码位不在 A-Za-z 范围内,所以会被 [^A-Za-z]* 自动跳过,不需要手动去掉国旗。
+//   同时因为要求紧跟字母判断、且锚定开头,也不会误匹配到 "AUS"(澳大利亚)这种
+//   同样包含 "US" 但开头是别的字母的名字。
+// 如果你的节点命名规则不是"大写字母前缀",请把 HK / US 等换成你自己的实际前缀或关键词。
 
 // 示例说明
 // 读取 名称为 "机场" 的 组合订阅 中的节点(单订阅不需要设置 type 参数)
