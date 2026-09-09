@@ -151,6 +151,19 @@
             "interrupt_exist_connections": true
         },
         {
+            "tag": "YouTube",
+            "type": "selector",
+            "outbounds": [
+                "Manual",
+                "HongKong",
+                "United States",
+                "Singapore",
+                "Germany"
+            ],
+            "default": "Manual",
+            "interrupt_exist_connections": true
+        },
+        {
             "tag": "Google",
             "type": "selector",
             "outbounds": [
@@ -315,6 +328,7 @@
                 "tag": [
                     "Reject",
                     "AI",
+                    "YouTube",
                     "Telegram",
                     "Twitter",
                     "Facebook",
@@ -387,6 +401,13 @@
                 ],
                 "action": "route",
                 "outbound": "AI"
+            },
+            {
+                "rule_set": [
+                    "YouTube"
+                ],
+                "action": "route",
+                "outbound": "YouTube"
             },
             {
                 "rule_set": [
