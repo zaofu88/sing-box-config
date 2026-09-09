@@ -1,4 +1,10 @@
-// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️^HongKong$🏷ℹ️港|hk|hongkong|kong kong|🇭🇰🕳ℹ️^Taiwan$🏷ℹ️台|tw|taiwan|🇹🇼🕳ℹ️^Japan$🏷ℹ️日本|jp|japan|🇯🇵🕳ℹ️^Singapore$🏷ℹ️^(?!.*(?:us)).*(新|sg|singapore|🇸🇬)🕳ℹ️^United States$🏷ℹ️美|us|unitedstates|united states|🇺🇸
+// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️^HongKong$🏷^HK🕳ℹ️^Taiwan$🏷^TW🕳ℹ️^Japan$🏷^JP🕳ℹ️^Singapore$🏷^SG🕳ℹ️^United States$🏷^US🕳ℹ️^Germany$🏷^DE
+
+// ⚠️ 上面 🏷 后面的匹配规则(^HK / ^US / ^SG / ^DE 等)是按"节点名以大写字母前缀开头"来写的,
+// 故意没有加 ℹ️ 标记,因为 ℹ️ 是双码位 emoji,经过 URL 编码/复制粘贴容易丢失或损坏,
+// 一旦丢失,原本想做的"不区分大小写"匹配就会退化成区分大小写,导致大写节点名完全匹配不上
+// (createTagRegExp 的实现是: 带 ℹ️ 才加正则的 i 标志)。
+// 如果你的节点命名规则不是"大写字母前缀",请把 ^HK / ^US 等换成你自己的实际前缀或关键词。
 
 // 示例说明
 // 读取 名称为 "机场" 的 组合订阅 中的节点(单订阅不需要设置 type 参数)
