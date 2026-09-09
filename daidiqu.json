@@ -231,6 +231,19 @@
             "interrupt_exist_connections": true
         },
         {
+            "tag": "Thunder",
+            "type": "selector",
+            "outbounds": [
+            "HongKong",
+            "United States",
+            "Singapore",
+            "Germany",
+            "Direct"
+           ],
+           "default": "Direct",
+           "interrupt_exist_connections": false
+        },
+        {
             "tag": "Emby",
             "type": "selector",
             "outbounds": [
@@ -374,6 +387,13 @@
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "Direct"
+            },
+            {
+                "process_path_regex": [
+                 "^/Applications/Thunder\\.app/.*"
+                ],
+                "action": "route",
+                "outbound": "Thunder"
             },
             {
                 "network": "icmp",
