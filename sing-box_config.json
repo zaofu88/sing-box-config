@@ -31,13 +31,6 @@
         "domain_resolver": "hosts_fix"
       },
       {
-        "tag": "gg-doh",
-        "type": "https",
-        "server": "dns.google",
-        "detour": "Proxy",
-        "domain_resolver": "hosts_fix"
-      },
-      {
         "tag": "ali-doh",
         "type": "https",
         "server": "dns.alidns.com",
@@ -99,10 +92,6 @@
         "server": "ali-doh"
       },
       {
-        "query_type": "HTTPS",
-        "action": "reject"
-      },
-      {
         "domain_suffix": [
           "lancache.steamcontent.com",
           "10099.com.cn",
@@ -127,7 +116,7 @@
       }
     ],
     "reverse_mapping": true,
-    "strategy": "ipv4_only",
+    "strategy": "prefer_ipv4",
     "optimistic": true,
     "final": "cf-doh"
   },
@@ -281,18 +270,16 @@
       "interrupt_exist_connections": true
     },
     {
-      "tag": "Final",
+      "tag": "RuleSet",
       "type": "selector",
       "outbounds": [
-        "Proxy",
         "🇭🇰 HongKong",
-        "🇺🇸 United States",
         "🇸🇬 Singapore",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
-        "Direct"
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
@@ -657,11 +644,11 @@
     ],
     "auto_detect_interface": true,
     "default_domain_resolver": "ali-udp",
-    "final": "Final"
+    "final": "Proxy"
   },
   "log": {
     "disabled": false,
-    "level": "info",
+    "level": "warn",
     "output": "sing-box.log",
     "timestamp": true
   },
@@ -669,7 +656,7 @@
     {
       "tag": "default",
       "version": 2,
-      "detour": "Proxy",
+      "detour": "RuleSet",
       "stream_receive_window": 0,
       "connection_receive_window": 0
     }
@@ -687,39 +674,39 @@
       "external_ui_download_detour": "Direct"
     }
   },
-    "inbounds": [
-        {
-            "type": "mixed",
-            "tag": "mixed",
-            "listen": "127.0.0.1",
-            "listen_port": 7080
-        },
-        {
-            "type": "tun",
-            "tag": "tun",
-            "address": [
-                "172.18.0.1/30",
-                "fdfe:dcba:9876::1/126"
-            ],
-            "mtu": 1500,
-            "platform": {
-                "http_proxy": {
-                    "enabled": true,
-                    "server": "127.0.0.1",
-                    "server_port": 7080
-                }
-            },
-            "stack": "mixed",
-            "auto_route": true,
-            "strict_route": true,
-            "route_exclude_address": [
-                "10.0.0.0/8",
-                "100.64.0.0/10",
-                "169.254.0.0/16",
-                "172.16.0.0/12",
-                "192.0.0.0/24",
-                "192.168.0.0/16"
-            ]
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7080
+    },
+    {
+      "type": "tun",
+      "tag": "tun",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "mtu": 1500,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7080
         }
-    ]
+      },
+      "stack": "mixed",
+      "auto_route": true,
+      "strict_route": true,
+      "route_exclude_address": [
+        "10.0.0.0/8",
+        "100.64.0.0/10",
+        "169.254.0.0/16",
+        "172.16.0.0/12",
+        "192.0.0.0/24",
+        "192.168.0.0/16"
+      ]
+    }
+  ]
 }
