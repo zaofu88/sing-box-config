@@ -9,14 +9,6 @@
             "223.5.5.5",
             "223.6.6.6"
           ],
-          "doh.pub": [
-            "1.12.12.21",
-            "120.53.53.53"
-          ],
-          "dns.google": [
-            "8.8.8.8",
-            "8.8.4.4"
-          ],
           "cloudflare-dns.com": [
             "104.16.248.249",
             "104.16.249.249"
@@ -37,20 +29,9 @@
         "domain_resolver": "hosts_fix"
       },
       {
-        "tag": "tx-doh",
-        "type": "https",
-        "server": "doh.pub",
-        "domain_resolver": "hosts_fix"
-      },
-      {
         "tag": "ali-udp",
         "type": "udp",
         "server": "223.5.5.5"
-      },
-      {
-        "tag": "tx-udp",
-        "type": "udp",
-        "server": "119.29.29.29"
       },
       {
         "tag": "fakeip",
@@ -60,11 +41,7 @@
       },
       {
         "tag": "local",
-        "type": "local",
-        "neighbor_domain": [
-          ".local",
-          ".lan"
-        ]
+        "type": "local"
       }
     ],
     "rules": [
@@ -101,8 +78,11 @@
           "lan",
           "home",
           "internal",
-          "corp"
+          "corp",
+          "in-addr.arpa",
+          "ip6.arpa"
         ],
+        "action": "route",
         "server": "local"
       },
       {
@@ -134,10 +114,10 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
+        "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "Direct",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
@@ -150,7 +130,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "Proxy",
       "interrupt_exist_connections": true
@@ -165,7 +145,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "Proxy",
       "interrupt_exist_connections": true
@@ -180,7 +160,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
+        "🇹🇼 Taiwan",
         "Direct"
       ],
       "default": "Proxy",
@@ -196,7 +176,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "Proxy",
       "interrupt_exist_connections": true
@@ -211,7 +191,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "Proxy",
       "interrupt_exist_connections": true
@@ -226,7 +206,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
+        "🇹🇼 Taiwan",
         "Direct"
       ],
       "default": "Proxy",
@@ -242,7 +222,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
+        "🇹🇼 Taiwan",
         "Direct"
       ],
       "default": "Proxy",
@@ -258,7 +238,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan",
+        "🇹🇼 Taiwan",
         "Direct"
       ],
       "default": "Proxy",
@@ -274,7 +254,7 @@
         "🇸🇬 Singapore",
         "🇩🇪 Germany",
         "🇯🇵 Japan",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "Proxy",
       "interrupt_exist_connections": true
@@ -288,7 +268,7 @@
         "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇺🇸 United States",
-        "🇨🇳 Taiwan"
+        "🇹🇼 Taiwan"
       ],
       "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
@@ -339,7 +319,7 @@
       "interrupt_exist_connections": true
     },
     {
-      "tag": "🇨🇳 Taiwan",
+      "tag": "🇹🇼 Taiwan",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
@@ -546,6 +526,10 @@
         "ip_is_private": true,
         "action": "route",
         "outbound": "Direct"
+      },
+      {
+        "network": "icmp",
+        "action": "resolve"
       },
       {
         "clash_mode": "全局直连",
