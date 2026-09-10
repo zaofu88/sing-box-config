@@ -31,10 +31,6 @@
         "server": "fakeip"
       },
       {
-        "query_type": "HTTPS",
-        "action": "reject"
-      },
-      {
         "rule_set": "cn_domain",
         "action": "route",
         "server": "ali"
@@ -49,7 +45,10 @@
         "rewrite_ttl": 1
       }
     ],
-    "final": "google"
+    "final": "google",
+    "reverse_mapping": true,
+    "strategy": "prefer_ipv4",
+    "optimistic": true
   },
   "route": {
     "default_domain_resolver": {
@@ -123,23 +122,22 @@
         "outbound": "openai"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "proxy_domain"
-          },
-          {
-            "invert": true,
-            "rule_set": [
-              "cn_domain",
-              "apple_domain",
-              "google_domain",
-              "telegram_domain",
-              "netflix_domain"
-            ]
-          }
-        ],
+        "rule_set": "cn_domain",
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "apple_domain",
+        "action": "route",
+        "outbound": "apple"
+      },
+      {
+        "rule_set": "telegram_domain",
+        "action": "route",
+        "outbound": "telegram"
+      },
+      {
+        "rule_set": "proxy_domain",
         "action": "route",
         "outbound": "proxy"
       },
@@ -147,36 +145,24 @@
         "action": "resolve"
       },
       {
-        "rule_set": [
-          "telegram_ip",
-          "telegram_domain"
-        ],
+        "rule_set": "telegram_ip",
         "action": "route",
         "outbound": "telegram"
       },
       {
-        "rule_set": [
-          "google_ip",
-          "google_domain"
-        ],
+        "rule_set": "google_ip",
         "action": "route",
         "outbound": "google"
       },
       {
-        "rule_set": [
-          "apple_ip",
-          "apple_domain"
-        ],
+        "rule_set": "apple_ip",
         "action": "route",
         "outbound": "apple"
       },
       {
-        "rule_set": [
-          "cn_ip",
-          "cn_domain"
-        ],
+        "rule_set": "cn_ip",
         "action": "route",
-        "outbound": "cn"
+        "outbound": "direct"
       }
     ],
     "rule_set": [
@@ -479,27 +465,6 @@
       "default": "us"
     },
     {
-      "tag": "cn",
-      "type": "selector",
-      "outbounds": [
-        "proxy",
-        "direct",
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "jp",
-        "jp-auto",
-        "sg",
-        "sg-auto",
-        "us",
-        "us-auto",
-        "all",
-        "all-auto"
-      ],
-      "default": "direct"
-    },
-    {
       "tag": "final",
       "type": "selector",
       "outbounds": [
@@ -555,48 +520,54 @@
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "tw-auto",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "jp-auto",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "sg-auto",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "us-auto",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "all-auto",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "1m",
-      "tolerance": 50
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
     },
     {
       "tag": "GLOBAL",
@@ -673,7 +644,7 @@
   },
   "log": {
     "disabled": false,
-    "level": "info",
+    "level": "warn",
     "timestamp": true
   },
   "http_clients": [
