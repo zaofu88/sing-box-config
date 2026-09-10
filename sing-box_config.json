@@ -132,6 +132,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan",
         "Direct"
@@ -147,6 +148,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan"
       ],
@@ -161,6 +163,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan"
       ],
@@ -175,6 +178,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan",
         "Direct"
@@ -190,6 +194,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan"
       ],
@@ -204,6 +209,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan"
       ],
@@ -218,6 +224,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan",
         "Direct"
@@ -233,6 +240,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan",
         "Direct"
@@ -248,6 +256,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan",
         "Direct"
@@ -263,6 +272,7 @@
         "🇭🇰 HongKong",
         "🇺🇸 United States",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇨🇳 Taiwan"
       ],
@@ -275,6 +285,7 @@
       "outbounds": [
         "🇭🇰 HongKong",
         "🇸🇬 Singapore",
+        "🇩🇪 Germany",
         "🇯🇵 Japan",
         "🇺🇸 United States",
         "🇨🇳 Taiwan"
@@ -302,6 +313,24 @@
     },
     {
       "tag": "🇸🇬 Singapore",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
+    },
+        {
+      "tag": "🇸🇬 Singapore",
+      "type": "urltest",
+      "outbounds": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "30m",
+      "tolerance": 100,
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "🇩🇪 Germany",
       "type": "urltest",
       "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
