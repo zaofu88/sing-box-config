@@ -240,7 +240,7 @@
         "tag": "openai_domain",
         "type": "remote",
         "format": "binary",
-        "url": "https://js.xiang.xx.kg/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/openai.srs",
+        "url": "https://js.xiang.xx.kg/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ai-!cn.srs",
         "http_client": "direct"
       },
       {
