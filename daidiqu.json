@@ -302,37 +302,55 @@
             "tag": "HongKong",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         },
         {
             "tag": "United States",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         },
         {
             "tag": "Singapore",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         },
         {
             "tag": "Germany",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         },
         {
             "tag": "Taiwan",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         },
         {
             "tag": "Japan",
             "type": "urltest",
             "outbounds": [],
-            "interrupt_exist_connections": true
+            "interrupt_exist_connections": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": "30m",
+            "tolerance": 100
         }
     ],
     "route": {
