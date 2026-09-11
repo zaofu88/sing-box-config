@@ -1,5 +1,4 @@
-// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=🕳ℹ️HongKong$🏷^[^A-Za-z]*HK🕳ℹ️Taiwan$🏷^[^A-Za-z]*TW🕳ℹ️Japan$🏷^[^A-Za-z]*JP🕳ℹ️Singapore$🏷^[^A-Za-z]*SG🕳ℹ️United States$🏷^[^A-Za-z]*US🕳ℹ️Germany$🏷^[^A-Za-z]*DE
-
+// https://raw.githubusercontent.com/xream/scripts/main/surge/modules/sub-store-scripts/sing-box/template.js#type=组合订阅&name=机场&outbound=香港节点$🏷ℹ️🇭🇰|港|hongkong|hong kong|\bhk\b🕳美国节点$🏷ℹ️🇺🇸|美国|united states|\bus\b🕳德国节点$🏷ℹ️🇩🇪|德国|germany|\bde\b🕳新加坡节点$🏷ℹ️🇸🇬|新加坡|singapore|\bsg\b
 // ⚠️ 上面 🕳 后面的容器匹配规则(HongKong$ / Taiwan$ 等)是按"配置文件里的 outbound.tag
 // 可能带国旗 emoji + 空格前缀(比如 "🇭🇰 HongKong"),但一定以英文地区名结尾"来写的:
 //   只用 $ 锚定结尾、不用 ^ 锚定开头,就能不管前面是纯文字还是"🇭🇰 "这种国旗+空格,
