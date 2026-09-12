@@ -74,24 +74,19 @@
       },
       {
         "rule_set": [
-          "apple-cn",
-          "microsoft-cn"
-        ],
-        "action": "route",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": [
           "ai",
           "youtube",
           "google-site",
           "telegram-site",
           "github",
-          "onedrive",
+          "microsoft",
           "x",
+          "spotify",
           "facebook",
           "instagram",
           "emby",
+          "apple",
+          "geolocation-!cn",
           "xunlei"
         ],
         "query_type": [
@@ -131,7 +126,7 @@
       },
       { "action": "respond" }
     ],
-    "final": "dns_direct",
+    "final": "dns_proxy",
     "strategy": "prefer_ipv4",
     "optimistic": true,
     "reverse_mapping": true
@@ -257,7 +252,7 @@
     },
     {
       "type": "selector",
-      "tag": "OneDrive",
+      "tag": "Microsoft",
       "outbounds": [
         "Default",
         "Direct-Out"
@@ -285,6 +280,33 @@
     {
       "type": "selector",
       "tag": "AI",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+    {
+      "type": "selector",
+      "tag": "Apple",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+    {
+      "type": "selector",
+      "tag": "Spotify",
+      "outbounds": [
+        "Default",
+        "Direct-Out"
+      ],
+      "default": "Default"
+    },
+    {
+      "type": "selector",
+      "tag": "Others",
       "outbounds": [
         "Default",
         "Direct-Out"
@@ -376,10 +398,10 @@
         "update_interval": "1d"
       },
       {
-        "tag": "onedrive",
+        "tag": "microsoft",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
         "http_client": "rs-http",
         "update_interval": "1d"
       },
@@ -416,6 +438,14 @@
         "update_interval": "1d"
       },
       {
+        "tag": "spotify",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
         "tag": "emby",
         "type": "remote",
         "format": "binary",
@@ -424,18 +454,18 @@
         "update_interval": "1d"
       },
       {
-        "tag": "apple-cn",
+        "tag": "apple",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple@cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
         "http_client": "rs-http",
         "update_interval": "1d"
       },
       {
-        "tag": "microsoft-cn",
+        "tag": "geolocation-!cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft@cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "http_client": "rs-http",
         "update_interval": "1d"
       },
@@ -490,8 +520,6 @@
         "rule_set": [
           "private-ip",
           "private-site",
-          "apple-cn",
-          "microsoft-cn",
           "cn",
           "cnip"
         ],
@@ -551,10 +579,10 @@
       },
       {
         "rule_set": [
-          "onedrive"
+          "microsoft"
         ],
         "action": "route",
-        "outbound": "OneDrive"
+        "outbound": "Microsoft"
       },
       {
         "rule_set": [
@@ -565,10 +593,31 @@
       },
       {
         "rule_set": [
+          "spotify"
+        ],
+        "action": "route",
+        "outbound": "Spotify"
+      },
+      {
+        "rule_set": [
           "ai"
         ],
         "action": "route",
         "outbound": "AI"
+      },
+      {
+        "rule_set": [
+          "apple"
+        ],
+        "action": "route",
+        "outbound": "Apple"
+      },
+      {
+        "rule_set": [
+          "geolocation-!cn"
+        ],
+        "action": "route",
+        "outbound": "Others"
       }
     ],
     "auto_detect_interface": true,
