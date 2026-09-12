@@ -57,12 +57,6 @@
       },
       {
         "rule_set": [
-          "Ads"
-        ],
-        "action": "reject"
-      },
-      {
-        "rule_set": [
           "ChinaDomain"
         ],
         "action": "route",
@@ -117,7 +111,7 @@
         "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "🇭🇰 HongKong",
+      "default": "🇸🇬 Singapore",
       "interrupt_exist_connections": true
     },
     {
@@ -132,7 +126,7 @@
         "🇯🇵 Japan",
         "🇹🇼 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇸🇬 Singapore",
       "interrupt_exist_connections": true
     },
     {
@@ -147,7 +141,7 @@
         "🇯🇵 Japan",
         "🇹🇼 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
@@ -163,11 +157,11 @@
         "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "Proxy",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
-      "tag": "Twitter",
+      "tag": "Social",
       "type": "selector",
       "outbounds": [
         "Proxy",
@@ -178,7 +172,7 @@
         "🇯🇵 Japan",
         "🇹🇼 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇸🇬 Singapore",
       "interrupt_exist_connections": true
     },
     {
@@ -193,7 +187,7 @@
         "🇯🇵 Japan",
         "🇹🇼 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇸🇬 Singapore",
       "interrupt_exist_connections": true
     },
     {
@@ -209,11 +203,11 @@
         "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "Proxy",
+      "default": "🇩🇪 Germany",
       "interrupt_exist_connections": true
     },
     {
-      "tag": "Game",
+      "tag": "Apple",
       "type": "selector",
       "outbounds": [
         "Proxy",
@@ -225,7 +219,7 @@
         "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "Proxy",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
@@ -241,11 +235,11 @@
         "🇹🇼 Taiwan",
         "Direct"
       ],
-      "default": "Proxy",
+      "default": "🇺🇸 United States",
       "interrupt_exist_connections": true
     },
     {
-      "tag": "ProxyMedia",
+      "tag": "Streaming",
       "type": "selector",
       "outbounds": [
         "Proxy",
@@ -256,7 +250,7 @@
         "🇯🇵 Japan",
         "🇹🇼 Taiwan"
       ],
-      "default": "Proxy",
+      "default": "🇭🇰 HongKong",
       "interrupt_exist_connections": true
     },
     {
@@ -331,172 +325,33 @@
   "route": {
     "rule_set": [
       {
-        "tag": "Ads",
+        "tag": [
+          "AI",
+          "Telegram",
+          "Twitter",
+          "Facebook",
+          "TikTok",
+          "Instagram",
+          "YouTube",
+          "Google",
+          "Microsoft",
+          "Github",
+          "OneDrive",
+          "Emby",
+          "Spotify",
+          "Bahamut",
+          "Netflix",
+          "Disney",
+          "PrimeVideo",
+          "HBO",
+          "Proxy",
+          "Apple",
+          "ChinaDomain",
+          "ChinaIP"
+        ],
         "type": "remote",
         "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Ads_SukkaW.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "AI",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Microsoft",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "OneDrive",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/OneDrive.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Github",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "YouTube",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Google",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Twitter",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Steam",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Steam.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Epic",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Epic.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Emby",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Emby.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Spotify",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Spotify.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Bahamut",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Bahamut.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Netflix",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Netflix.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Disney",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Disney.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "PrimeVideo",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/PrimeVideo.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "HBO",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/HBO.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "TikTok",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "Proxy",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/Proxy.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "AppleCN",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleCN.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "AppleProxy",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/AppleServers.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "ChinaDomain",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://git.repcz.link/github.com/Repcz/Tool/raw/X/sing-box/Rules/ChinaDomain.srs",
-        "http_client": "default"
-      },
-      {
-        "tag": "ChinaIP",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/Loyalsoldier/geoip/raw/release/srs/cn.srs",
-        "http_client": "default"
+        "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/{tag}.srs"
       }
     ],
     "rules": [
@@ -543,12 +398,6 @@
       },
       {
         "rule_set": [
-          "Ads"
-        ],
-        "action": "reject"
-      },
-      {
-        "rule_set": [
           "AI"
         ],
         "action": "route",
@@ -556,7 +405,13 @@
       },
       {
         "rule_set": [
-          "YouTube",
+          "YouTube"
+        ],
+        "action": "route",
+        "outbound": "YouTube"
+      },
+      {
+        "rule_set": [
           "Google"
         ],
         "action": "route",
@@ -573,10 +428,24 @@
       },
       {
         "rule_set": [
-          "Twitter"
+          "Twitter",
+          "Facebook",
+          "TikTok",
+          "Instagram"
         ],
         "action": "route",
-        "outbound": "Twitter"
+        "outbound": "Social"
+      },
+      {
+        "rule_set": [
+          "Bahamut",
+          "Netflix",
+          "Disney",
+          "PrimeVideo",
+          "HBO"
+        ],
+        "action": "route",
+        "outbound": "Streaming"
       },
       {
         "rule_set": [
@@ -601,23 +470,10 @@
       },
       {
         "rule_set": [
-          "Steam",
-          "Epic"
+          "Apple"
         ],
         "action": "route",
-        "outbound": "Game"
-      },
-      {
-        "rule_set": [
-          "Bahamut",
-          "Netflix",
-          "Disney",
-          "PrimeVideo",
-          "HBO",
-          "TikTok"
-        ],
-        "action": "route",
-        "outbound": "ProxyMedia"
+        "outbound": "Apple"
       },
       {
         "rule_set": [
@@ -627,20 +483,12 @@
         "outbound": "Proxy"
       },
       {
-        "rule_set": [
-          "AppleProxy"
-        ],
-        "action": "route",
-        "outbound": "🇭🇰 HongKong"
-      },
-      {
         "action": "resolve"
       },
       {
         "rule_set": [
           "ChinaDomain",
-          "ChinaIP",
-          "AppleCN"
+          "ChinaIP"
         ],
         "action": "route",
         "outbound": "Direct"
