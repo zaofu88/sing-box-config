@@ -8,6 +8,7 @@ const compatible_outbound = {
 // 表驱动地区匹配，新增地区只需在此添加
 const regionMap = [
   { tags: ['hk', 'hk-auto'], regex: /港|hk|hongkong|hong\s?kong|🇭🇰/i },
+  { tags: ['hk', 'hk-auto'], regex: /德|de|germany|🇩🇪|\bde\b/i },
   { tags: ['tw', 'tw-auto'], regex: /台|tw|taiwan|🇹🇼/i },
   { tags: ['jp', 'jp-auto'], regex: /日本|jp|japan|🇯🇵/i },
   { tags: ['sg', 'sg-auto'], regex: /新加坡|singapore|🇸🇬|\bsg\b/i },
