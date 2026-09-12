@@ -130,6 +130,21 @@
       "interrupt_exist_connections": true
     },
     {
+      "tag": "YouTube",
+      "type": "selector",
+      "outbounds": [
+        "Proxy",
+        "🇭🇰 HongKong",
+        "🇺🇸 United States",
+        "🇸🇬 Singapore",
+        "🇩🇪 Germany",
+        "🇯🇵 Japan",
+        "🇹🇼 Taiwan"
+      ],
+      "default": "🇸🇬 Singapore",
+      "interrupt_exist_connections": true
+    },
+    {
       "tag": "Google",
       "type": "selector",
       "outbounds": [
