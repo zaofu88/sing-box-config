@@ -57,7 +57,7 @@
       },
       {
         "rule_set": [
-          "ChinaDomain"
+          "geosite-geolocation-cn"
         ],
         "action": "route",
         "server": "ali-doh"
@@ -360,13 +360,25 @@
           "PrimeVideo",
           "HBO",
           "Proxy",
-          "Apple",
-          "ChinaDomain",
-          "ChinaIP"
+          "Apple"
         ],
         "type": "remote",
         "format": "binary",
         "url": "https://js.zaofu.gv.uy/https://github.com/Repcz/Tool/raw/X/sing-box/Rules/{tag}.srs"
+      },
+      {
+        "tag": "geosite-geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "update_interval": "1d"
       }
     ],
     "rules": [
@@ -502,8 +514,8 @@
       },
       {
         "rule_set": [
-          "ChinaDomain",
-          "ChinaIP"
+          "geosite-geolocation-cn",
+          "geoip-cn"
         ],
         "action": "route",
         "outbound": "Direct"
