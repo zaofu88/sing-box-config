@@ -153,7 +153,6 @@
           "server_port": 7080
         }
       },
-      "stack": "mixed",
       "auto_route": true,
       "strict_route": true,
       "route_exclude_address": [
