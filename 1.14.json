@@ -3,6 +3,13 @@
     "level": "info",
     "timestamp": true
   },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m",
+    "detour": "Direct-Out"
+  },
   "dns": {
     "servers": [
       {
@@ -80,9 +87,16 @@
           "telegram-site",
           "github",
           "microsoft",
-          "x",
+          "netflix-site",
+          "disney",
+          "amazon",
+          "bahamut",
+          "hbo",
+          "hulu",
+          "twitter",
+          "tiktok",
           "spotify",
-          "facebook",
+          "facebook-site",
           "instagram",
           "emby",
           "apple",
@@ -124,7 +138,9 @@
         "action": "route",
         "server": "dns_direct"
       },
-      { "action": "respond" }
+      {
+        "action": "respond"
+      }
     ],
     "final": "dns_proxy",
     "strategy": "prefer_ipv4",
@@ -179,8 +195,8 @@
       "type": "urltest",
       "tag": "Auto",
       "outbounds": [],
-      "interval": "3m",
-      "tolerance": 30
+      "interval": "30m",
+      "tolerance": 100
     },
     {
       "type": "direct",
@@ -215,7 +231,7 @@
     },
     {
       "type": "selector",
-      "tag": "Twitter",
+      "tag": "Social",
       "outbounds": [
         "Default",
         "Direct-Out"
@@ -224,16 +240,7 @@
     },
     {
       "type": "selector",
-      "tag": "Facebook",
-      "outbounds": [
-        "Default",
-        "Direct-Out"
-      ],
-      "default": "Default"
-    },
-    {
-      "type": "selector",
-      "tag": "Instagram",
+      "tag": "Streaming",
       "outbounds": [
         "Default",
         "Direct-Out"
@@ -413,15 +420,79 @@
         "update_interval": "1d"
       },
       {
-        "tag": "x",
+        "tag": "netflix-ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/x.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
         "http_client": "rs-http",
         "update_interval": "1d"
       },
       {
-        "tag": "facebook",
+        "tag": "netflix-site",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "disney",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/disney.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "amazon",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/amazon.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "bahamut",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bahamut.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "hbo",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/hbo.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "hulu",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/hulu.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "twitter",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "facebook-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/facebook.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "facebook-site",
         "type": "remote",
         "format": "binary",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
@@ -433,6 +504,14 @@
         "type": "remote",
         "format": "binary",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+        "http_client": "rs-http",
+        "update_interval": "1d"
+      },
+      {
+        "tag": "tiktok",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
         "http_client": "rs-http",
         "update_interval": "1d"
       },
@@ -550,24 +629,27 @@
       },
       {
         "rule_set": [
-          "x"
+          "twitter",
+          "facebook-ip",
+          "facebook-site",
+          "instagram",
+          "tiktok"
         ],
         "action": "route",
-        "outbound": "Twitter"
+        "outbound": "Social"
       },
       {
         "rule_set": [
-          "facebook"
+          "netflix-ip",
+          "netflix-site",
+          "disney",
+          "amazon",
+          "bahamut",
+          "hbo",
+          "hulu"
         ],
         "action": "route",
-        "outbound": "Facebook"
-      },
-      {
-        "rule_set": [
-          "instagram"
-        ],
-        "action": "route",
-        "outbound": "Instagram"
+        "outbound": "Streaming"
       },
       {
         "rule_set": [
@@ -626,7 +708,8 @@
   },
   "http_clients": [
     {
-      "tag": "rs-http"
+      "tag": "rs-http",
+      "detour": "GLOBAL"
     }
   ],
   "experimental": {
@@ -637,6 +720,9 @@
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
+      "external_ui": "ui",
+      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "Direct-Out",
       "default_mode": "rule"
     }
   }
