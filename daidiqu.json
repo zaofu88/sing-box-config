@@ -1,4 +1,10 @@
 {
+    "log": {
+        "disabled": false,
+        "level": "warn",
+        "output": "sing-box.log",
+        "timestamp": true
+    },
     "dns": {
         "servers": [
             {
@@ -10,7 +16,7 @@
                         "223.6.6.6"
                     ],
                     "doh.pub": [
-                        "1.12.12.21",
+                        "1.12.12.12",
                         "120.53.53.53"
                     ]
                 }
@@ -48,11 +54,16 @@
                 "rule_set": [
                     "Reject"
                 ],
-                "action": "reject"
+                "action": "predefined",
+                "rcode": "NXDOMAIN"
             },
             {
-                "query_type": "HTTPS",
-                "action": "reject"
+                "query_type": [
+                    "HTTPS",
+                    "SVCB"
+                ],
+                "action": "predefined",
+                "rcode": "NOERROR"
             },
             {
                 "domain_suffix": [
@@ -83,6 +94,13 @@
                 "server": "local"
             },
             {
+                "rule_set": [
+                    "ChinaDomain"
+                ],
+                "action": "route",
+                "server": "ali-doh"
+            },
+            {
                 "query_type": [
                     "A",
                     "AAAA"
@@ -94,12 +112,14 @@
             {
                 "action": "evaluate",
                 "server": "ali-doh",
-                "tag": "ali"
+                "tag": "ali",
+                "timeout": "5s"
             },
             {
                 "action": "evaluate",
                 "server": "tx-doh",
-                "tag": "tencent"
+                "tag": "tencent",
+                "timeout": "5s"
             },
             {
                 "match_response": "ali",
@@ -117,8 +137,42 @@
         "reverse_mapping": true,
         "strategy": "prefer_ipv4",
         "optimistic": true,
-        "final": "ali-doh"
+        "final": "ali-udp"
     },
+    "inbounds": [
+        {
+            "type": "mixed",
+            "tag": "mixed",
+            "listen": "127.0.0.1",
+            "listen_port": 7080
+        },
+        {
+            "type": "tun",
+            "tag": "tun",
+            "address": [
+                "172.18.0.1/30",
+                "fdfe:dcba:9876::1/126"
+            ],
+            "mtu": 1500,
+            "platform": {
+                "http_proxy": {
+                    "enabled": true,
+                    "server": "127.0.0.1",
+                    "server_port": 7080
+                }
+            },
+            "auto_route": true,
+            "strict_route": true,
+            "route_exclude_address": [
+                "10.0.0.0/8",
+                "100.64.0.0/10",
+                "169.254.0.0/16",
+                "172.16.0.0/12",
+                "192.0.0.0/24",
+                "192.168.0.0/16"
+            ]
+        }
+    ],
     "outbounds": [
         {
             "tag": "Direct",
@@ -128,6 +182,9 @@
             "tag": "Manual",
             "type": "selector",
             "outbounds": [
+                "SG-jgw vless-ws-tls",
+                "SG-jgw tuic",
+                "HK-vless-reality-wawo",
                 "HongKong",
                 "United States",
                 "Singapore",
@@ -142,6 +199,7 @@
             "type": "selector",
             "outbounds": [
                 "Manual",
+                "SG-jgw tuic",
                 "HongKong",
                 "United States",
                 "Singapore",
@@ -172,6 +230,20 @@
                 "United States",
                 "Singapore",
                 "Germany"
+            ],
+            "default": "HongKong",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Github",
+            "type": "selector",
+            "outbounds": [
+                "Manual",
+                "HongKong",
+                "United States",
+                "Singapore",
+                "Germany",
+                "Direct"
             ],
             "default": "HongKong",
             "interrupt_exist_connections": true
@@ -234,14 +306,16 @@
             "tag": "Thunder",
             "type": "selector",
             "outbounds": [
-            "HongKong",
-            "United States",
-            "Singapore",
-            "Germany",
-            "Direct"
-           ],
-           "default": "Direct",
-           "interrupt_exist_connections": false
+                "SG-jgw vless-ws-tls",
+                "HK-vless-reality-wawo",
+                "HongKong",
+                "United States",
+                "Singapore",
+                "Germany",
+                "Direct"
+            ],
+            "default": "Direct",
+            "interrupt_exist_connections": false
         },
         {
             "tag": "Emby",
@@ -282,6 +356,19 @@
                 "Germany"
             ],
             "default": "Manual",
+            "interrupt_exist_connections": true
+        },
+        {
+            "tag": "Apple",
+            "type": "selector",
+            "outbounds": [
+                "Manual",
+                "HongKong",
+                "United States",
+                "Singapore",
+                "Germany"
+            ],
+            "default": "HongKong",
             "interrupt_exist_connections": true
         },
         {
@@ -378,7 +465,7 @@
                     "PrimeVideo",
                     "HBO",
                     "Proxy",
-                    "AppleProxy",
+                    "Apple",
                     "ChinaDomain",
                     "ChinaIP"
                 ],
@@ -408,7 +495,7 @@
             },
             {
                 "process_path_regex": [
-                 "^/Applications/Thunder\\.app/.*"
+                    "^/Applications/Thunder\\.app/.*"
                 ],
                 "action": "route",
                 "outbound": "Thunder"
@@ -432,6 +519,13 @@
                     "Reject"
                 ],
                 "action": "reject"
+            },
+            {
+                "domain_suffix": [
+                    "69yun69.net"
+                ],
+                "action": "route",
+                "outbound": "Emby"
             },
             {
                 "rule_set": [
@@ -481,11 +575,17 @@
             },
             {
                 "rule_set": [
-                    "Microsoft",
-                    "Github"
+                    "Microsoft"
                 ],
                 "action": "route",
                 "outbound": "Microsoft"
+            },
+            {
+                "rule_set": [
+                    "Github"
+                ],
+                "action": "route",
+                "outbound": "Github"
             },
             {
                 "rule_set": [
@@ -514,17 +614,17 @@
             },
             {
                 "rule_set": [
+                    "Apple"
+                ],
+                "action": "route",
+                "outbound": "Apple"
+            },
+            {
+                "rule_set": [
                     "Proxy"
                 ],
                 "action": "route",
                 "outbound": "Manual"
-            },
-            {
-                "rule_set": [
-                    "AppleProxy"
-                ],
-                "action": "route",
-                "outbound": "HongKong"
             },
             {
                 "action": "resolve"
@@ -540,14 +640,11 @@
         ],
         "auto_detect_interface": true,
         "default_http_client": "default",
-        "default_domain_resolver": "ali-udp",
+        "default_domain_resolver": {
+            "server": "ali-udp",
+            "strategy": "prefer_ipv4"
+        },
         "final": "Final"
-    },
-    "log": {
-        "disabled": false,
-        "level": "info",
-        "output": "sing-box.log",
-        "timestamp": true
     },
     "http_clients": [
         {
@@ -562,7 +659,7 @@
             "tag": "sing-box dashboard",
             "listen": "127.0.0.1",
             "listen_port": 9091,
-            "secret": "",
+            "secret": "change-me-to-a-random-string",
             "access_control_allow_origin": [
                 "http://sing-box-dashboard.sagernet.org",
                 "http://dash.sing-box.app"
@@ -570,38 +667,12 @@
             "access_control_allow_private_network": true
         }
     ],
-    "inbounds": [
-        {
-            "type": "mixed",
-            "tag": "mixed",
-            "listen": "127.0.0.1",
-            "listen_port": 7080
-        },
-        {
-            "type": "tun",
-            "tag": "tun",
-            "address": [
-                "172.18.0.1/30",
-                "fdfe:dcba:9876::1/126"
-            ],
-            "mtu": 1500,
-            "platform": {
-                "http_proxy": {
-                    "enabled": true,
-                    "server": "127.0.0.1",
-                    "server_port": 7080
-                }
-            },
-            "auto_route": true,
-            "strict_route": true,
-            "route_exclude_address": [
-                "10.0.0.0/8",
-                "100.64.0.0/10",
-                "169.254.0.0/16",
-                "172.16.0.0/12",
-                "192.0.0.0/24",
-                "192.168.0.0/16"
-            ]
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "path": "cache.db",
+            "store_fakeip": true,
+            "store_dns": true
         }
-    ]
+    }
 }
