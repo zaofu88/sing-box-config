@@ -1,4 +1,4 @@
-const { type, name } = $arguments
+const { type, name, android } = $arguments
 
 // 表驱动地区匹配：tag 必须与模板里的 urltest 分组 tag 完全一致
 // 新增地区：先在模板里加分组，再在这里加一行
@@ -77,6 +77,11 @@ const broken = config.outbounds.filter(
 )
 if (broken.length > 0) {
   throw new Error('以下分组没有可用出站：' + broken.map(o => o.tag).join('、'))
+}
+
+// 平台专属选项：仅 Android 需要，用法：脚本参数加 android=1
+if (/^1$|true/i.test(String(android ?? ''))) {
+  config.route.override_android_vpn = true
 }
 
 $content = JSON.stringify(config, null, 2)
